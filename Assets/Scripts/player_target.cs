@@ -38,11 +38,22 @@ public class player_target : Entity {
 
 
 	void OnCollisionEnter2D(Collision2D col) {
+		//Hit by a bullet
 		if (col.gameObject.tag == "Bullet") {
 			Destroy (col.gameObject);
 			health -= 34;
 			Debug.Log (health);
 			checkAlive ();
+		}
+
+		//Picks up health
+		if (col.gameObject.tag == "HealthPack") {
+
+			for (int i = 0; i < 20; i++) {
+				if (health < 100) {
+					health += 1;
+				}
+			}
 		}
 	}
 
