@@ -35,4 +35,20 @@ public class player_target : Entity {
 			transform.eulerAngles = new Vector3 (0, 0, 270);
 		}
 	}
+
+
+	void OnCollisionEnter2D(Collision2D col) {
+		if (col.gameObject.tag == "Bullet") {
+			Destroy (col.gameObject);
+			health -= 34;
+			Debug.Log (health);
+			checkAlive ();
+		}
+	}
+
+	void checkAlive(){
+		if (health < 0) {
+			Destroy (gameObject);
+		}
+	}
 }
