@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Player : Entity {
 	public float walkingSpeed;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -37,6 +38,6 @@ public class Player : Entity {
 		//Fixes twitchiness of turns.
 		transform.eulerAngles = new Vector3 (0, 0, transform.eulerAngles.z);
 		GetComponent<Rigidbody2D> ().angularVelocity = 0;
-
 	}
+
 }
