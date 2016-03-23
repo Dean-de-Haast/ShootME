@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Entity : MonoBehaviour {
 	public float health;
+	public Text healthText;
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +14,8 @@ public class Entity : MonoBehaviour {
 	void Update () {
 	
 	}
+
+
+
+
 }

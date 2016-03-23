@@ -5,7 +5,7 @@ public class player_target : Entity {
 	public float walkingSpeed;
 	// Use this for initialization
 	void Start () {
-	
+		healthText.text = "P2 Health: "+ health;
 	}
 	
 	// Update is called once per frame
@@ -36,7 +36,6 @@ public class player_target : Entity {
 		}
 	}
 
-
 	void OnCollisionEnter2D(Collision2D col) {
 		//Hit by a bullet
 		if (col.gameObject.tag == "Bullet") {
@@ -54,12 +53,17 @@ public class player_target : Entity {
 					health += 1;
 				}
 			}
+			healthText.text = "P2 Health: "+ health;
 		}
-	}
 
+	}
 	void checkAlive(){
 		if (health < 0) {
 			Destroy (gameObject);
+			healthText.text = "P2 Health: 0";
+		} else {
+			healthText.text = "P2 Health: "+ health;
 		}
 	}
+
 }
