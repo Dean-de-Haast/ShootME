@@ -7,6 +7,7 @@ public class Enemy : Entity {
 	private Vector2 PlayerDirection;
 	private float xDif;
 	private float yDif;
+	public float speed;
 
 
 	// Use this for initialization
@@ -20,7 +21,11 @@ public class Enemy : Entity {
 		xDif = Player.x - transform.position.x;
 		yDif = Player.y - transform.position.y;
 
-		Debug.Log (xDif + "     " + yDif);
+		//Debug.Log (xDif + "     " + yDif);
+		PlayerDirection = new Vector2 (xDif, yDif);
+
+		GetComponent<Rigidbody2D>().AddForce (PlayerDirection.normalized * speed);
+
 
 		/*if( TargetInRange() == true ){
 			FireAtTarget();
