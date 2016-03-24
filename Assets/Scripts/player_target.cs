@@ -38,7 +38,7 @@ public class player_target : Entity {
 
 	void OnCollisionEnter2D(Collision2D col) {
 		//Hit by a bullet
-		if (col.gameObject.tag == "Bullet") {
+		if (col.gameObject.tag == "Bullet" || col.gameObject.tag == "EnemyBullet" ) {
 			Destroy (col.gameObject);
 			health -= 34;
 			Debug.Log (health);

@@ -6,7 +6,7 @@ public class Player : Entity {
 
 	// Use this for initialization
 	void Start () {
-		healthText.text = "P2 Health: "+ health;
+		healthText.text = "P1 Health: "+ health;
 	}
 	
 	// Update is called once per frame
@@ -42,6 +42,15 @@ public class Player : Entity {
 
 	void OnCollisionEnter2D(Collision2D col) {
 
+		//Gets shot
+		//Hit by a bullet
+		if (col.gameObject.tag == "EnemyBullet") {
+			Destroy (col.gameObject);
+			health -= 34;
+			Debug.Log (health);
+			checkAlive ();
+		}
+
 		//Picks up health
 		if (col.gameObject.tag == "HealthPack") {
 
@@ -62,5 +71,7 @@ public class Player : Entity {
 			healthText.text = "P1 Health: "+ health;
 		}
 	}
+
+
 
 }
