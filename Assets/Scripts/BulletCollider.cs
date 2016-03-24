@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
-public class Entity : MonoBehaviour {
-	public float health;
-	public Text healthText;
-	public int noLives;
+public class BulletCollider : MonoBehaviour {
+
 	// Use this for initialization
 	void Start () {
 	
@@ -14,5 +11,11 @@ public class Entity : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+		if (col.gameObject.tag != "Player1") {
+			Destroy (gameObject);
+		}
 	}
 }

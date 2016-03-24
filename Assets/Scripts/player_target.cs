@@ -56,14 +56,30 @@ public class player_target : Entity {
 			healthText.text = "P2 Health: "+ health;
 		}
 
+		if (col.gameObject.tag == "Barrel") {
+			
+		}
+
 	}
+
+
+
+
 	void checkAlive(){
 		if (health < 0) {
 			Destroy (gameObject);
 			healthText.text = "P2 Health: 0";
+			manageLives();
 		} else {
 			healthText.text = "P2 Health: "+ health;
 		}
+	}
+	void manageLives(){
+		noLives--;
+		if (noLives < 1) {
+			Debug.Log ("GAME OVER");
+		} else {
+		}	
 	}
 
 }
