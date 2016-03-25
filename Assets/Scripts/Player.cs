@@ -33,6 +33,7 @@ public class Player : Entity {
 		//Rotation to the direction of the mouse pointer.
 		var mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Quaternion rotation = Quaternion.LookRotation (transform.position - mousePos, Vector3.forward);
+		//Debug.Log (transform.position - mousePos);
 		transform.rotation = rotation;
 
 		//Fixes twitchiness of turns.
