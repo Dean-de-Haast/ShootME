@@ -3,9 +3,14 @@ using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
 	Transform player1;
+	public float WalkingSpeed = 0.5f;
+	public float rotSpeed = 90f;
 
-	public Transform sighStart;
+	public Transform sightStart;
 	public Transform sightEnd;
+	public Transform sightEndFarLeft,sightEndFarLeft2,sightEndFarMiddle,sightEndFarRight,sightEndFarRight2;
+
+	public bool spottedFar = false;
 	public bool spotted = false;
 	public bool spottedObject = false;
 
@@ -19,30 +24,57 @@ public class EnemyAI : MonoBehaviour {
 	void Update () {
 		Raycasting ();
 		Behaviours ();
-		Chase();
+		//MoveForward ();
 	}
 
 	//Check for line of sight.
 	void Raycasting(){
-		Debug.DrawLine (sighStart.position,sightEnd.position, Color.green);
+		spottedFar = false;
+		Debug.DrawLine (sightStart.position,sightEnd.position, Color.green);
+		Debug.DrawLine (sightStart.position,sightEndFarLeft.position, Color.red);
+		Debug.DrawLine (sightStart.position,sightEndFarLeft2.position, Color.cyan);
+		Debug.DrawLine (sightStart.position,sightEndFarMiddle.position, Color.blue);
+		Debug.DrawLine (sightStart.position,sightEndFarRight.position, Color.magenta);
+		Debug.DrawLine (sightStart.position,sightEndFarRight2.position, Color.yellow);
+
 		//Check if touching collider.
-		spottedObject = Physics2D.Linecast (sighStart.position, sightEnd.position, 1<<LayerMask.NameToLayer("Objects"));
+
+		if (!spottedFar) {
+			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarLeft.position, 1 << LayerMask.NameToLayer ("Players"));
+		} 
+		if (!spottedFar) {
+			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarLeft2.position, 1 << LayerMask.NameToLayer ("Players"));
+		}
+		if (!spottedFar) {
+			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarMiddle.position, 1 << LayerMask.NameToLayer ("Players"));
+		} 
+		if (!spottedFar) {
+			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarRight.position, 1 << LayerMask.NameToLayer ("Players"));
+		} 
+		if (!spottedFar) {
+			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarRight2.position, 1 << LayerMask.NameToLayer ("Players"));
+		}
+
+
+		spottedObject = Physics2D.Linecast (sightStart.position, sightEnd.position, 1<<LayerMask.NameToLayer("Objects"));
+
 		if (!spottedObject) {
-			spotted = Physics2D.Linecast (sighStart.position, sightEnd.position, 1 << LayerMask.NameToLayer ("Players"));
+			spotted = Physics2D.Linecast (sightStart.position, sightEnd.position, 1 << LayerMask.NameToLayer ("Players"));
 		}
 	}
 
 	void Behaviours(){
 		if (spotted) {
 			alert.SetActive (true);
-			//Chase();
-		} else{
+
+		} else if (spottedFar) {
+			alert.SetActive (true);
+			Chase();
+		}else{
 			alert.SetActive (false);
 
 		}	
 	}
-	
-
 
 	void Chase(){
 		GameObject go;
@@ -62,6 +94,17 @@ public class EnemyAI : MonoBehaviour {
 
 		float zAngle = Mathf.Atan2 (dir.y, dir.x) *Mathf.Rad2Deg - 90; //Gets the angle along x axis therefore turn 90
 
-		transform.rotation = Quaternion.Euler (0, 0, zAngle);
+		Quaternion desiredRot = Quaternion.Euler (0, 0, zAngle);
+
+		//Slowing down the speed of rotation.
+		transform.rotation = Quaternion.RotateTowards(transform.rotation,desiredRot,rotSpeed*Time.deltaTime);
+		MoveForward ();
+	}
+
+	void MoveForward(){
+		Vector3 pos = transform.position;
+		Vector3 velocity = new Vector3 (0, WalkingSpeed * Time.deltaTime, 0);
+		pos += transform.rotation * velocity;
+		transform.position = pos;
 	}
 }

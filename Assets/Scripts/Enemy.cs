@@ -2,14 +2,6 @@
 using System.Collections;
 
 public class Enemy : Entity {
-	public Transform target;
-	private Vector3 Player;
-	private Vector2 PlayerDirection;
-	private float xDif;
-	private float yDif;
-	public float speed;
-
-
 	// Use this for initialization
 	void Start () {
 	
@@ -17,51 +9,7 @@ public class Enemy : Entity {
 	
 	// Update is called once per frame
 	void Update () {
-		//inLineOfSight ();
 
-		//Player = GameObject.Find ("Assassin").transform.position;
-		//xDif = Player.x - transform.position.x;
-		//yDif = Player.y - transform.position.y;
-
-		//Debug.Log (xDif + "     " + yDif);
-		//PlayerDirection = new Vector2 (xDif, yDif);
-
-		//GetComponent<Rigidbody2D>().AddForce (PlayerDirection.normalized * speed);
-		//Quaternion rotation = Quaternion.LookRotation (transform.position-target.position);
-		//Debug.Log (transform.position - target.position);
-		//transform.rotation = rotation;
-		//transform.position = Vector3(X, Y, Z);
-
-
-		/*if( TargetInRange() == true ){
-			FireAtTarget();
-		}
-		//else if( bulletComingTowardsMe == true )
-		//{
-		//	MoveAwayFromBullet();
-		//}
-		else{
-			WanderAroundAimlessly();
-		}
-	}
-
-	bool TargetInRange(){
-		//Debug.Log (gameObject.position.y);
-		//Debug.Log (this.position.x);
-		//Debug.Log ("TARGET");
-		//Debug.Log (target.position.y);
-		return false;
-	}
-
-	void FireAtTarget(){
-	}
-
-	void WanderAroundAimlessly(){
-	}*/
-	
-	
-	
-	
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
@@ -83,7 +31,6 @@ public class Enemy : Entity {
 					health += 1;
 				}
 			}
-			//healthText.text = "P2 Health: "+ health;
 		}
 
 		if (col.gameObject.tag == "Barrel") {
@@ -101,36 +48,7 @@ public class Enemy : Entity {
 		}
 	}
 
-	/*void inLineOfSight(){
 
-		RaycastHit2D sightTest = Physics2D.Raycast(transform.position, transform.position - target.transform.position, detectionOptions.detectionRange);
-		if (sightTest.collider != null) {
-			if (sightTest.collider.gameObject != gameObject) {
-				target = null;
-				Debug.Log ("Rigidbody collider is: " + inLineOfSight.collider);
-			}
-		}
-		//return target;
-
-		//precompute our ray settings
-		Vector3 start = transform.position;
-		Vector3 direction = (target.transform.position - transform.position).normalized;
-		float distance = detectionOptions.detectionRange;
-
-		//draw the ray in the editor
-		Debug.DrawRay(start,direction*distance,Colors.Red);
-
-		//do the ray test
-		RaycastHit2D sightTest = Physics2D.Raycast(start,  direction, distance);
-		if (sightTest.collider != null) 
-		{
-			if (sightTest.collider.gameObject != gameObject) 
-			{
-				target = null;
-				Debug.Log ("Rigidbody collider is: " + sightTest.collider);
-			}
-		}
-	}*/
 }
 
 
