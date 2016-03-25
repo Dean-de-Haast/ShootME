@@ -4,7 +4,8 @@ using System.Collections;
 public class Enemy : Entity {
 
 	public GameObject alert;
-	public Sprite sprite1; // Drag your first sprite here
+	public GameObject bloodPrefab;
+	public Sprite sprite1,sprite2; // Drag your first sprite here
 
 	//public float dieDelay = 0.4f;
 
@@ -64,18 +65,12 @@ public class Enemy : Entity {
 		alert.SetActive (false);
 		//transform.position = transform.position;
 		spriteRenderer = GetComponent<SpriteRenderer>(); // we are accessing the SpriteRenderer that is attached to the Gameobject
-		spriteRenderer.sprite = sprite1;
+
 		//waiter ();
+		Instantiate(bloodPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+		spriteRenderer.sprite = sprite1;
 		Destroy (gameObject,0.4f);
-
 	}
-
-
-	//IEnumerator waiter(){
-	//	yield return new WaitForSeconds(dieDelay);
-
-	//}
-
 
 }
 

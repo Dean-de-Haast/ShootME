@@ -15,4 +15,5 @@ public class Entity : MonoBehaviour {
 	void Update () {
 	
 	}
+
 }

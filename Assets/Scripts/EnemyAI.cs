@@ -6,6 +6,8 @@ public class EnemyAI : MonoBehaviour {
 	public float WalkingSpeed = 0.5f;
 	public float rotSpeed = 90f;
 
+	public GameObject FirePoint;
+
 	public Transform sightStart;
 	public Transform sightEnd;
 	public Transform sightEndFarLeft,sightEndFarLeft2,sightEndFarMiddle,sightEndFarRight,sightEndFarRight2;
@@ -65,15 +67,22 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	void Behaviours(){
+		//If close enough start shooting.
 		if (spotted) {
+			Debug.Log ("SHOOT");
 			alert.SetActive (true);
-
+			StartShooting ();
+		//If the enemy is close enough and in line of sight to 'see' the Player chase him until in Range of shooting.
 		} else if (spottedFar) {
 			alert.SetActive (true);
-			Chase();
-		}else{
+			Chase ();
+		} else {
 			alert.SetActive (false);
+		}
 
+		//Stop Shooting if no longer in close range.
+		if(!spotted){
+			StopShooting ();
 		}	
 	}
 
@@ -107,5 +116,13 @@ public class EnemyAI : MonoBehaviour {
 		Vector3 velocity = new Vector3 (0, WalkingSpeed * Time.deltaTime, 0);
 		pos += transform.rotation * velocity;
 		transform.position = pos;
+	}
+
+	void StartShooting(){
+		FirePoint.GetComponent<EnemyShooting>().enabled = true;
+	}
+
+	void StopShooting(){
+		FirePoint.GetComponent<EnemyShooting>().enabled = false;
 	}
 }

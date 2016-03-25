@@ -27,14 +27,14 @@ public class EnemyShooting : MonoBehaviour {
 	void playerShooting(){
 		// Update is called once per frame
 		if(Time.time >= coolDown){
-			if(Input.GetKey (KeyCode.V)){
+			//if(Input.GetKey (KeyCode.V)){
 				Rigidbody2D bPrefab = Instantiate(bulletPrefab, new Vector3(transform.position.x + xValue, transform.position.y + yValue, transform.position.z), Quaternion.identity) as Rigidbody2D;
 
 				bPrefab.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed);
 
 				coolDown = Time.time + attackSpeed;
 				Destroy (bPrefab.gameObject, 1);
-			}
+			//}
 		}
 	}
 
