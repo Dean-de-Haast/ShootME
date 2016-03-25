@@ -6,6 +6,7 @@ public class Enemy : Entity {
 	public GameObject alert;
 	public GameObject bloodPrefab;
 	public Sprite sprite1,sprite2; // Drag your first sprite here
+	public float rotSpeed = 180f;
 
 	//public float dieDelay = 0.4f;
 
@@ -43,8 +44,8 @@ public class Enemy : Entity {
 			}
 		}
 
-		if (col.gameObject.tag == "Barrel") {
-
+		if (col.gameObject.tag == "Barrel"||col.gameObject.tag == "Wall") {
+			changeDirection ();
 		}
 
 	}
@@ -71,6 +72,16 @@ public class Enemy : Entity {
 		spriteRenderer.sprite = sprite1;
 		Destroy (gameObject,0.4f);
 	}
+
+	void changeDirection(){
+		//Quaternion desiredRot = Quaternion.Euler (0, 0, 45);
+
+		//Slowing down the speed of rotation.
+		//transform.rotation = Quaternion.RotateTowards(transform.rotation,desiredRot,rotSpeed*Time.deltaTime);
+		transform.Rotate(0,0,45);
+	}
+
+
 
 }
 

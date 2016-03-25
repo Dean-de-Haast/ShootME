@@ -48,7 +48,6 @@ public class Player : Entity {
 		if (col.gameObject.tag == "EnemyBullet") {
 			Destroy (col.gameObject);
 			health -= 34;
-			Debug.Log (health);
 			checkAlive ();
 		}
 

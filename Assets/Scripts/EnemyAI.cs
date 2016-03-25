@@ -78,6 +78,7 @@ public class EnemyAI : MonoBehaviour {
 			Chase ();
 		} else {
 			alert.SetActive (false);
+			Patrol ();
 		}
 
 		//Stop Shooting if no longer in close range.
@@ -89,7 +90,7 @@ public class EnemyAI : MonoBehaviour {
 	void Chase(){
 		GameObject go;
 		if (player1 == null) {
-			go = GameObject.Find ("Assassin");
+			go = GameObject.Find ("Player1");
 
 			if(go !=null){
 				player1 = go.transform;
@@ -98,7 +99,6 @@ public class EnemyAI : MonoBehaviour {
 
 		if (player1 == null)
 			return; // Try again next frame if it doesn't exist.
-
 		Vector3 dir = player1.position - transform.position;
 		dir.Normalize ();
 
@@ -118,6 +118,19 @@ public class EnemyAI : MonoBehaviour {
 		transform.position = pos;
 	}
 
+	void Patrol(){
+		Vector2 randomDirection = new Vector3(Random.Range(-30, 30), Random.Range(-30, 30));
+		randomDirection.Normalize ();
+
+		float zAngle = Mathf.Atan2 (randomDirection.y, randomDirection.x) *Mathf.Rad2Deg - 90; //Gets the angle along x axis therefore turn 90
+
+		Quaternion desiredRot = Quaternion.Euler (0, 0, zAngle);
+
+		//Slowing down the speed of rotation.
+		transform.rotation = Quaternion.RotateTowards(transform.rotation,desiredRot,rotSpeed*Time.deltaTime);
+		MoveForward ();
+	}
+
 	void StartShooting(){
 		FirePoint.GetComponent<EnemyShooting>().enabled = true;
 	}
@@ -125,4 +138,28 @@ public class EnemyAI : MonoBehaviour {
 	void StopShooting(){
 		FirePoint.GetComponent<EnemyShooting>().enabled = false;
 	}
+
+	/*IEnumerator Patrol()
+	{
+		bool newDirection = true;
+		if (newDirection == true)
+		{
+			Vector2 randomDirection = new Vector3(Random.Range(-30, 30), Random.Range(-30, 30));
+			rig.AddRelativeForce(randomDirection);
+
+			float z = Mathf.Atan2((randomDirection.y - transform.position.y), (randomDirection.x - transform.position.x)) * Mathf.Rad2Deg - 90;
+			transform.eulerAngles = new Vector3(0, 0, z);
+
+			yield return new WaitForSeconds(1f);
+			newDirection = false;
+		}
+
+		if (newDirection == false)
+		{
+			yield return new WaitForSeconds(1f);
+			newDirection = true;
+		}
+
+	}*/
+
 }
