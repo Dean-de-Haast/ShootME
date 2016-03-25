@@ -38,29 +38,30 @@ public class EnemyAI : MonoBehaviour {
 		Debug.DrawLine (sightStart.position,sightEndFarRight2.position, Color.yellow);
 
 		//Check if touching collider.
-
-		if (!spottedFar) {
-			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarLeft.position, 1 << LayerMask.NameToLayer ("Players"));
-		} 
-		if (!spottedFar) {
-			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarLeft2.position, 1 << LayerMask.NameToLayer ("Players"));
-		}
-		if (!spottedFar) {
-			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarMiddle.position, 1 << LayerMask.NameToLayer ("Players"));
-		} 
-		if (!spottedFar) {
-			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarRight.position, 1 << LayerMask.NameToLayer ("Players"));
-		} 
-		if (!spottedFar) {
-			spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarRight2.position, 1 << LayerMask.NameToLayer ("Players"));
-		}
-
-
 		spottedObject = Physics2D.Linecast (sightStart.position, sightEnd.position, 1<<LayerMask.NameToLayer("Objects"));
 
 		if (!spottedObject) {
 			spotted = Physics2D.Linecast (sightStart.position, sightEnd.position, 1 << LayerMask.NameToLayer ("Players"));
+		
+			if (!spottedFar) {
+				spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarLeft.position, 1 << LayerMask.NameToLayer ("Players"));
+			} 
+			if (!spottedFar) {
+				spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarLeft2.position, 1 << LayerMask.NameToLayer ("Players"));
+			}
+			if (!spottedFar) {
+				spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarMiddle.position, 1 << LayerMask.NameToLayer ("Players"));
+			} 
+			if (!spottedFar) {
+				spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarRight.position, 1 << LayerMask.NameToLayer ("Players"));
+			} 
+			if (!spottedFar) {
+				spottedFar = Physics2D.Linecast (sightStart.position, sightEndFarRight2.position, 1 << LayerMask.NameToLayer ("Players"));
+			}
 		}
+
+
+
 	}
 
 	void Behaviours(){

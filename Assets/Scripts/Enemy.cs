@@ -2,6 +2,15 @@
 using System.Collections;
 
 public class Enemy : Entity {
+
+	public GameObject alert;
+	public Sprite sprite1; // Drag your first sprite here
+
+	//public float dieDelay = 0.4f;
+
+	private SpriteRenderer spriteRenderer; 
+
+
 	// Use this for initialization
 	void Start () {
 	
@@ -41,12 +50,31 @@ public class Enemy : Entity {
 
 	void checkAlive(){
 		if (health < 0) {
-			Destroy (gameObject);
+			
+			//Destroy (gameObject);
 			//healthText.text = "P2 Health: 0";
+			Death();
 		} else {
 			//healthText.text = "P2 Health: "+ health;
 		}
 	}
+
+	void Death(){
+		
+		alert.SetActive (false);
+		//transform.position = transform.position;
+		spriteRenderer = GetComponent<SpriteRenderer>(); // we are accessing the SpriteRenderer that is attached to the Gameobject
+		spriteRenderer.sprite = sprite1;
+		//waiter ();
+		Destroy (gameObject,0.4f);
+
+	}
+
+
+	//IEnumerator waiter(){
+	//	yield return new WaitForSeconds(dieDelay);
+
+	//}
 
 
 }
