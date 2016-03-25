@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Player : Entity {
 	public float walkingSpeed;
+	private int keyCount = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -42,6 +43,7 @@ public class Player : Entity {
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
+		
 
 		//Gets shot
 		//Hit by a bullet
@@ -62,6 +64,15 @@ public class Player : Entity {
 			healthText.text = "P1 Health: "+ health;
 		}
 
+		if (col.gameObject.tag == "Key") {
+			keyCount++;
+		}
+
+		if (col.gameObject.tag == "Door") {
+			//Debug.Log ("WTF" + keyCount);
+			openDoor (col);
+		}
+
 	}
 	void checkAlive(){
 		if (health < 0) {
@@ -69,6 +80,13 @@ public class Player : Entity {
 			healthText.text = "P1 Health: 0";
 		} else {
 			healthText.text = "P1 Health: "+ health;
+		}
+	}
+
+	void openDoor(Collision2D col){
+		if (keyCount > 0) {
+			//Debug.Log ("Door UNlocked");
+			Destroy (col.gameObject);
 		}
 	}
 
