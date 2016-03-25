@@ -68,7 +68,7 @@ public class Player : Entity {
 			keyCount++;
 		}
 
-		if (col.gameObject.tag == "Door") {
+		if (col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
 			//Debug.Log ("WTF" + keyCount);
 			openDoor (col);
 		}
@@ -84,9 +84,14 @@ public class Player : Entity {
 	}
 
 	void openDoor(Collision2D col){
-		if (keyCount > 0) {
-			//Debug.Log ("Door UNlocked");
-			Destroy (col.gameObject);
+		if (col.gameObject.tag == "Door") {
+			if (keyCount > 0) { //Only requires one key to unlock.
+				Destroy (col.gameObject);
+			}
+		} else if (col.gameObject.tag == "Door2") {
+			if (keyCount > 1) {  //Door2 requires 2 keys to unlock
+				Destroy (col.gameObject);
+			}
 		}
 	}
 
