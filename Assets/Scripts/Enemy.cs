@@ -44,7 +44,7 @@ public class Enemy : Entity {
 			}
 		}
 
-		if (col.gameObject.tag == "Barrel"||col.gameObject.tag == "Wall"||col.gameObject.tag == "Door") {
+		if (col.gameObject.tag == "Barrel"||col.gameObject.tag == "Wall"||col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
 			changeDirection ();
 		}
 

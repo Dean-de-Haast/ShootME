@@ -138,28 +138,5 @@ public class EnemyAI : MonoBehaviour {
 	void StopShooting(){
 		FirePoint.GetComponent<EnemyShooting>().enabled = false;
 	}
-
-	/*IEnumerator Patrol()
-	{
-		bool newDirection = true;
-		if (newDirection == true)
-		{
-			Vector2 randomDirection = new Vector3(Random.Range(-30, 30), Random.Range(-30, 30));
-			rig.AddRelativeForce(randomDirection);
-
-			float z = Mathf.Atan2((randomDirection.y - transform.position.y), (randomDirection.x - transform.position.x)) * Mathf.Rad2Deg - 90;
-			transform.eulerAngles = new Vector3(0, 0, z);
-
-			yield return new WaitForSeconds(1f);
-			newDirection = false;
-		}
-
-		if (newDirection == false)
-		{
-			yield return new WaitForSeconds(1f);
-			newDirection = true;
-		}
-
-	}*/
-
+		
 }
