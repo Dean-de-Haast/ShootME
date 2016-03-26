@@ -29,7 +29,7 @@ public class Enemy : Entity {
 		//Hit by a bullet
 		if (col.gameObject.tag == "Bullet") {
 			Destroy (col.gameObject);
-			health -= 34;
+			health -= col.gameObject.GetComponent<BulletSpecs>().damage;
 			Debug.Log (health);
 			checkAlive ();
 		}
@@ -51,7 +51,7 @@ public class Enemy : Entity {
 	}
 
 	void checkAlive(){
-		if (health < 0) {
+		if (health <= 0) {
 			
 			//Destroy (gameObject);
 			//healthText.text = "P2 Health: 0";

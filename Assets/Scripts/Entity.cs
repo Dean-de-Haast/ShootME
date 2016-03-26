@@ -6,6 +6,8 @@ public class Entity : MonoBehaviour {
 	public float health;
 	public Text healthText;
 	public int noLives;
+
+
 	// Use this for initialization
 	void Start () {
 	
@@ -15,5 +17,7 @@ public class Entity : MonoBehaviour {
 	void Update () {
 	
 	}
+
+
 
 }

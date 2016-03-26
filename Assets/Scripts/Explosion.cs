@@ -4,7 +4,7 @@ using System.Collections;
 public class Explosion : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
-
+		gameObject.GetComponent<Rigidbody2D> ().isKinematic = true;
 	}
 
 	// Update is called once per frame
@@ -20,6 +20,7 @@ public class Explosion : MonoBehaviour {
 		}
 
 		if (col.gameObject.tag == "Player2") {	
+			Debug.Log ("MOVE");
 			gameObject.GetComponent<Rigidbody2D> ().isKinematic = false;
 		}
 	}
@@ -30,9 +31,9 @@ public class Explosion : MonoBehaviour {
 
 	void Explode() {
 		Debug.Log ("BLOW 2");
-		var exp = GetComponent<ParticleSystem>();
-		exp.Play();
-		Destroy(gameObject,exp.duration);
+//		var exp = GetComponent<ParticleSystem>();
+//		exp.Play();
+//		Destroy(gameObject,exp.duration);
 	}
 	
 } 

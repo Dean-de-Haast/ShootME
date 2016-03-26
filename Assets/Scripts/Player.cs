@@ -3,8 +3,12 @@ using System.Collections;
 
 public class Player : Entity {
 	public float walkingSpeed;
-	private int keyCount = 0;
+	public bool gunUpgraded =false;
 
+	public int keyCount = 0;
+
+	private SpriteRenderer spriteRenderer; 
+	public Sprite newGun;
 	// Use this for initialization
 	void Start () {
 		healthText.text = "P1 Health: "+ health;
@@ -66,11 +70,16 @@ public class Player : Entity {
 
 		if (col.gameObject.tag == "Key") {
 			keyCount++;
+			GameObject.Find ("Player2").GetComponent<player2>().keyCount++;
 		}
+			
 
 		if (col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
-			//Debug.Log ("WTF" + keyCount);
 			openDoor (col);
+		}
+
+		if (col.gameObject.tag == "GunUpgrade") {
+			changeGun ();
 		}
 
 	}
@@ -83,7 +92,7 @@ public class Player : Entity {
 		}
 	}
 
-	void openDoor(Collision2D col){
+	public void openDoor(Collision2D col){
 		if (col.gameObject.tag == "Door") {
 			if (keyCount > 0) { //Only requires one key to unlock.
 				Destroy (col.gameObject);
@@ -95,6 +104,13 @@ public class Player : Entity {
 		}
 	}
 
+
+	void changeGun(){
+		spriteRenderer = GetComponent<SpriteRenderer>(); // we are accessing the SpriteRenderer that is attached to the Gameobject
+		spriteRenderer.sprite = newGun;
+		gunUpgraded = true;
+
+	}
 
 
 }

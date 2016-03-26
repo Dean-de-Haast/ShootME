@@ -3,6 +3,7 @@ using System.Collections;
 
 public class player2 : Entity {
 	public float walkingSpeed;
+	public int keyCount = 0;
 	// Use this for initialization
 	void Start () {
 		healthText.text = "P2 Health: "+ health;
@@ -40,8 +41,8 @@ public class player2 : Entity {
 		Debug.Log (col.gameObject.tag);
 		//Hit by a bullet
 		if (col.gameObject.tag == "Bullet" || col.gameObject.tag == "EnemyBullet" ) {
+			health -= col.gameObject.GetComponent<BulletSpecs> ().damage;
 			Destroy (col.gameObject);
-			health -= 34;
 			Debug.Log (health);
 			checkAlive ();
 		}
@@ -56,16 +57,18 @@ public class player2 : Entity {
 			}
 			healthText.text = "P2 Health: "+ health;
 		}
-
-		if (col.gameObject.tag == "ExplosiveBarrel") {
-			Rigidbody2D barrel = col.gameObject.GetComponent<Rigidbody2D>();
-			barrel.isKinematic = false;
+		if (col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
+			//Debug.Log ("WTF" + keyCount);
+			openDoor (col);
+		}
+		if (col.gameObject.tag == "Key") {
+			
+			keyCount++;
+			Debug.Log (keyCount);
+			GameObject.Find ("Player1").GetComponent<Player>().keyCount++;
 		}
 
 	}
-
-
-
 
 	void checkAlive(){
 		if (health < 0) {
@@ -82,6 +85,18 @@ public class player2 : Entity {
 			Debug.Log ("GAME OVER");
 		} else {
 		}	
+	}
+
+	public void openDoor(Collision2D col){
+		if (col.gameObject.tag == "Door") {
+			if (keyCount > 0) { //Only requires one key to unlock.
+				Destroy (col.gameObject);
+			}
+		} else if (col.gameObject.tag == "Door2") {
+			if (keyCount > 1) {  //Door2 requires 2 keys to unlock
+				Destroy (col.gameObject);
+			}
+		}
 	}
 
 }

@@ -5,13 +5,8 @@ public class PlayerShooting : MonoBehaviour {
 
 
 
-	public Rigidbody2D bulletPrefab;
-	public float attackSpeed = 0.5f;
-	public float coolDown;
-	public float bulletSpeed = 500;
-	public float yValue = 0f; // Used to make it look like it's shot from the gun itself (offset)
-	public float xValue = 0.2f; // Same as above
-	public float timeAlive = 0f;
+	public Rigidbody2D bulletPrefab,bulletUpgradedPrefab;
+	private float coolDown;
 	// Use this for initialization
 	void Start () {
 	
@@ -25,15 +20,28 @@ public class PlayerShooting : MonoBehaviour {
 
 
 	void playerShooting(){
+		GameObject go;
+		go = GameObject.Find ("Player1");
+
 		// Update is called once per frame
 		if(Time.time >= coolDown){
 			if(Input.GetMouseButton(0)){
-				Rigidbody2D bPrefab = Instantiate(bulletPrefab, new Vector3(transform.position.x + xValue, transform.position.y + yValue, transform.position.z), Quaternion.identity) as Rigidbody2D;
+				//Depending on which gun is held depends which bullet is fired.
+				if (go.GetComponent<Player> ().gunUpgraded) {
+					Debug.Log ("Upgraded SHot");
+					Rigidbody2D bPrefab = Instantiate (bulletUpgradedPrefab, new Vector3 (transform.position.x, transform.position.y , transform.position.z), Quaternion.identity) as Rigidbody2D;
+					bPrefab.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletUpgradedPrefab.GetComponent<BulletSpecs>().bulletSpeed);
 
-				bPrefab.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed);
+					coolDown = Time.time + bulletUpgradedPrefab.GetComponent<BulletSpecs>().attackSpeed;
+					Destroy (bPrefab.gameObject, bulletUpgradedPrefab.GetComponent<BulletSpecs>().timeAlive);
+				} else {
+					Debug.Log ("Normal SHot");
+					Rigidbody2D bPrefab = Instantiate (bulletPrefab, new Vector3 (transform.position.x , transform.position.y, transform.position.z), Quaternion.identity) as Rigidbody2D;
+					bPrefab.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletPrefab.GetComponent<BulletSpecs>().bulletSpeed);
 
-				coolDown = Time.time + attackSpeed;
-				Destroy (bPrefab.gameObject, 1);
+					coolDown = Time.time + bulletPrefab.GetComponent<BulletSpecs>().attackSpeed;
+					Destroy (bPrefab.gameObject, bulletPrefab.GetComponent<BulletSpecs>().timeAlive);
+				}
 			}
 		}
 	}
