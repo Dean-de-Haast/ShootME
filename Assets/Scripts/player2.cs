@@ -9,7 +9,7 @@ public class player2 : Entity {
 	private AudioSource audio; 
 	// Use this for initialization
 	void Start () {
-//		healthText.text = "P2 Health: "+ health;
+		healthText.text = "P2 Health: "+ health;
 	}
 	
 	// Update is called once per frame
@@ -60,7 +60,7 @@ public class player2 : Entity {
 					health += 1;
 				}
 			}
-		//	healthText.text = "P2 Health: "+ health;
+			healthText.text = "P2 Health: "+ health;
 		}
 		if (col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
 			//Debug.Log ("WTF" + keyCount);
@@ -82,10 +82,11 @@ public class player2 : Entity {
 	public void checkAlive(){
 		if (health < 0) {
 			Destroy (gameObject);
-		//	healthText.text = "P2 Health: 0";
+			healthText.text = "P2 Health: 0";
 			manageLives();
+			Application.LoadLevel ("Dead");
 		} else {
-		//	healthText.text = "P2 Health: "+ health;
+			healthText.text = "P2 Health: "+ health;
 		}
 	}
 	void manageLives(){
@@ -110,6 +111,7 @@ public class player2 : Entity {
 
 	void ExitLevel(){
 		Debug.Log ("Next Level");
+		Application.LoadLevel ("Level2");
 	}
 
 }

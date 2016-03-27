@@ -52,7 +52,7 @@ public class Enemy : Entity {
 			checkAlive();
 		}
 
-		if (col.gameObject.tag == "Barrel"||col.gameObject.tag == "Wall"||col.gameObject.tag == "Door"||col.gameObject.tag == "Door2"||col.gameObject.tag == "ExplosiveBarrel") {
+		if (col.gameObject.tag == "Barrel"||col.gameObject.tag == "Wall"||col.gameObject.tag == "Door"||col.gameObject.tag == "Door2"||col.gameObject.tag == "ExitDoor"||col.gameObject.tag == "ExplosiveBarrel") {
 			changeDirection ();
 		}
 

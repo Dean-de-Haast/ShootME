@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
+	public string mainMenu;
 	public string startLevel;
-	public string levelSelect;
+	public string controlView;
 	// Use this for initialization
 	void Start () {
 	
@@ -15,14 +17,17 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void NewGame(){
-		Application.LoadLevel (startLevel);
+		SceneManager.LoadScene(startLevel);
 	}
 
-	public void LevelSelect(){
-		Application.LoadLevel (levelSelect);
+	public void Control(){
+		SceneManager.LoadScene(controlView);
 	}
 
 	public void QuitGame(){
 		Application.Quit ();
+	}
+	public void Back(){
+		SceneManager.LoadScene(mainMenu);
 	}
 }

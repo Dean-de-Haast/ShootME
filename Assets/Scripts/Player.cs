@@ -13,7 +13,7 @@ public class Player : Entity {
 	public Sprite newGun;
 	// Use this for initialization
 	void Start () {
-	//	healthText.text = "P1 Health: "+ health;
+		healthText.text = "P1 Health: "+ health;
 		audio = GetComponent<AudioSource> ();
 	}
 	
@@ -69,7 +69,7 @@ public class Player : Entity {
 					health += 1;
 				}
 			}
-			//healthText.text = "P1 Health: "+ health;
+			healthText.text = "P1 Health: "+ health;
 		}
 
 		if (col.gameObject.tag == "Key") {
@@ -94,9 +94,10 @@ public class Player : Entity {
 	public void checkAlive(){
 		if (health < 0) {
 			Destroy (gameObject);
-			//healthText.text = "P1 Health: 0";
+			healthText.text = "P1 Health: 0";
+			Application.LoadLevel ("Dead");
 		} else {
-			//healthText.text = "P1 Health: "+ health;
+			healthText.text = "P1 Health: "+ health;
 		}
 	}
 
@@ -122,6 +123,7 @@ public class Player : Entity {
 
 	void ExitLevel(){
 		Debug.Log ("Next Level");
+		Application.LoadLevel ("Level2");
 	}
 
 
