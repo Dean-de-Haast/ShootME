@@ -7,9 +7,11 @@ public class PlayerShooting : MonoBehaviour {
 
 	public Rigidbody2D bulletPrefab,bulletUpgradedPrefab;
 	private float coolDown;
+	private AudioSource audio; 
+
 	// Use this for initialization
 	void Start () {
-	
+		audio = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -26,6 +28,7 @@ public class PlayerShooting : MonoBehaviour {
 		// Update is called once per frame
 		if(Time.time >= coolDown){
 			if(Input.GetMouseButton(0)){
+				audio.Play ();
 				//Depending on which gun is held depends which bullet is fired.
 				if (go.GetComponent<Player> ().gunUpgraded) {
 					Debug.Log ("Upgraded SHot");

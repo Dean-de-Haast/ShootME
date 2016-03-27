@@ -4,14 +4,18 @@ using System.Collections;
 public class player2 : Entity {
 	public float walkingSpeed;
 	public int keyCount = 0;
+	public float damage;
+
+	private AudioSource audio; 
 	// Use this for initialization
 	void Start () {
-		healthText.text = "P2 Health: "+ health;
+//		healthText.text = "P2 Health: "+ health;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		PlayerMovement ();
+		audio = GetComponent<AudioSource> ();
 	}
 
 	void PlayerMovement(){
@@ -41,9 +45,10 @@ public class player2 : Entity {
 		Debug.Log (col.gameObject.tag);
 		//Hit by a bullet
 		if (col.gameObject.tag == "Bullet" || col.gameObject.tag == "EnemyBullet" ) {
-			health -= col.gameObject.GetComponent<BulletSpecs> ().damage;
+			health -= 34;
 			Destroy (col.gameObject);
 			Debug.Log (health);
+			audio.Play(); 
 			checkAlive ();
 		}
 
@@ -55,7 +60,7 @@ public class player2 : Entity {
 					health += 1;
 				}
 			}
-			healthText.text = "P2 Health: "+ health;
+		//	healthText.text = "P2 Health: "+ health;
 		}
 		if (col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
 			//Debug.Log ("WTF" + keyCount);
@@ -68,15 +73,19 @@ public class player2 : Entity {
 			GameObject.Find ("Player1").GetComponent<Player>().keyCount++;
 		}
 
+		if (col.gameObject.tag == "ExitDoor") {
+			ExitLevel ();
+		}
+
 	}
 
-	void checkAlive(){
+	public void checkAlive(){
 		if (health < 0) {
 			Destroy (gameObject);
-			healthText.text = "P2 Health: 0";
+		//	healthText.text = "P2 Health: 0";
 			manageLives();
 		} else {
-			healthText.text = "P2 Health: "+ health;
+		//	healthText.text = "P2 Health: "+ health;
 		}
 	}
 	void manageLives(){
@@ -97,6 +106,10 @@ public class player2 : Entity {
 				Destroy (col.gameObject);
 			}
 		}
+	}
+
+	void ExitLevel(){
+		Debug.Log ("Next Level");
 	}
 
 }

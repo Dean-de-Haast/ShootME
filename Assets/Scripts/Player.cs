@@ -7,11 +7,14 @@ public class Player : Entity {
 
 	public int keyCount = 0;
 
+	private AudioSource audio; 
+
 	private SpriteRenderer spriteRenderer; 
 	public Sprite newGun;
 	// Use this for initialization
 	void Start () {
-		healthText.text = "P1 Health: "+ health;
+	//	healthText.text = "P1 Health: "+ health;
+		audio = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -54,6 +57,7 @@ public class Player : Entity {
 		if (col.gameObject.tag == "EnemyBullet") {
 			Destroy (col.gameObject);
 			health -= 34;
+			audio.Play(); 
 			checkAlive ();
 		}
 
@@ -65,7 +69,7 @@ public class Player : Entity {
 					health += 1;
 				}
 			}
-			healthText.text = "P1 Health: "+ health;
+			//healthText.text = "P1 Health: "+ health;
 		}
 
 		if (col.gameObject.tag == "Key") {
@@ -82,13 +86,17 @@ public class Player : Entity {
 			changeGun ();
 		}
 
+		if (col.gameObject.tag == "ExitDoor") {
+			ExitLevel ();
+		}
+
 	}
-	void checkAlive(){
+	public void checkAlive(){
 		if (health < 0) {
 			Destroy (gameObject);
-			healthText.text = "P1 Health: 0";
+			//healthText.text = "P1 Health: 0";
 		} else {
-			healthText.text = "P1 Health: "+ health;
+			//healthText.text = "P1 Health: "+ health;
 		}
 	}
 
@@ -110,6 +118,10 @@ public class Player : Entity {
 		spriteRenderer.sprite = newGun;
 		gunUpgraded = true;
 
+	}
+
+	void ExitLevel(){
+		Debug.Log ("Next Level");
 	}
 
 

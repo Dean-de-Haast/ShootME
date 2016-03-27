@@ -15,7 +15,7 @@ public class HealthPack : MonoBehaviour {
 
 	//Picks up health
 	void OnCollisionEnter2D(Collision2D col) {
-		if (col.gameObject.tag != "Bullet"&&col.gameObject.tag != "ExplosiveBarrel") {
+		if (col.gameObject.tag != "Bullet"&&col.gameObject.tag != "ExplosiveBarrel"&&col.gameObject.tag != "Enemy") {
 			Destroy (gameObject);
 		}
 	}

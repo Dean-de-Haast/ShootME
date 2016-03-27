@@ -12,9 +12,11 @@ public class EnemyShooting : MonoBehaviour {
 	public float yValue = 1f; // Used to make it look like it's shot from the gun itself (offset)
 	public float xValue = 0.2f; // Same as above
 	public float timeAlive = 1f;
+	private AudioSource audio; 
+
 	// Use this for initialization
 	void Start () {
-
+		audio = GetComponent<AudioSource> ();
 	}
 
 	// Update is called once per frame
@@ -29,6 +31,7 @@ public class EnemyShooting : MonoBehaviour {
 
 		// Update is called once per frame
 		if(Time.time >= coolDown){
+			audio.Play ();
 			Rigidbody2D bPrefab = Instantiate(bulletPrefab, new Vector3(transform.position.x + xValue, transform.position.y + yValue, transform.position.z), Quaternion.identity) as Rigidbody2D;
 			bPrefab.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed);
 

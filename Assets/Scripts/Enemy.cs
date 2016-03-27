@@ -8,6 +8,7 @@ public class Enemy : Entity {
 	public Sprite sprite1,sprite2; // Drag your first sprite here
 	public float rotSpeed = 180f;
 
+	private AudioSource audioShot; 
 	//public float dieDelay = 0.4f;
 
 	private SpriteRenderer spriteRenderer; 
@@ -15,7 +16,7 @@ public class Enemy : Entity {
 
 	// Use this for initialization
 	void Start () {
-	
+		audioShot = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +32,7 @@ public class Enemy : Entity {
 			Destroy (col.gameObject);
 			health -= col.gameObject.GetComponent<BulletSpecs>().damage;
 			Debug.Log (health);
+			audioShot.Play ();
 			checkAlive ();
 		}
 
@@ -44,7 +46,13 @@ public class Enemy : Entity {
 			}
 		}
 
-		if (col.gameObject.tag == "Barrel"||col.gameObject.tag == "Wall"||col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
+		if (col.gameObject.tag == "Player2") {
+			Debug.Log ("PLayer slaaan");
+			health -= col.gameObject.GetComponent<player2>().damage;
+			checkAlive();
+		}
+
+		if (col.gameObject.tag == "Barrel"||col.gameObject.tag == "Wall"||col.gameObject.tag == "Door"||col.gameObject.tag == "Door2"||col.gameObject.tag == "ExplosiveBarrel") {
 			changeDirection ();
 		}
 
