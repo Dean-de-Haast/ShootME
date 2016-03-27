@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity {
 	public float walkingSpeed;
 	public bool gunUpgraded =false;
+
+	//public string currentScene;
 
 	public int keyCount = 0;
 
@@ -15,6 +18,8 @@ public class Player : Entity {
 	void Start () {
 		healthText.text = "P1 Health: "+ health;
 		audio = GetComponent<AudioSource> ();
+
+
 	}
 	
 	// Update is called once per frame
