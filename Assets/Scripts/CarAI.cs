@@ -5,6 +5,8 @@ public class CarAI : MonoBehaviour {
 	public float speed;
 	public float rotSpeed;
 	public float damage;
+
+	public GameObject explosion;
 	// Use this for initialization
 	void Start () {
 		GetComponent<Rigidbody2D>().AddForce(transform.right * speed);
@@ -31,6 +33,11 @@ public class CarAI : MonoBehaviour {
 		if (col.gameObject.tag == "Player2") {
 			col.gameObject.GetComponent<player2>().health -= damage;
 			col.gameObject.GetComponent<player2> ().checkAlive ();
+		}
+
+		if (col.gameObject.tag == "ExplosiveBarrel") {
+			Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+			GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 		}
 	}
 

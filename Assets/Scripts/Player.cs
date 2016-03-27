@@ -95,6 +95,10 @@ public class Player : Entity {
 			ExitLevel ();
 		}
 
+		if (col.gameObject.tag == "WinDoor") {
+			Win ();
+		}
+
 	}
 	public void checkAlive(){
 		if (health < 0) {
@@ -129,6 +133,9 @@ public class Player : Entity {
 	void ExitLevel(){
 		Debug.Log ("Next Level");
 		Application.LoadLevel ("Level2");
+	}
+	void Win(){
+		Application.LoadLevel ("Win");
 	}
 
 

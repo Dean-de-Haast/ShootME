@@ -76,6 +76,9 @@ public class player2 : Entity {
 		if (col.gameObject.tag == "ExitDoor") {
 			ExitLevel ();
 		}
+		if (col.gameObject.tag == "WinDoor") {
+			Win ();
+		}
 
 	}
 
@@ -112,6 +115,10 @@ public class player2 : Entity {
 	void ExitLevel(){
 		Debug.Log ("Next Level");
 		Application.LoadLevel ("Level2");
+	}
+
+	void Win(){
+		Application.LoadLevel ("Win");
 	}
 
 }
