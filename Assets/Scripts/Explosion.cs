@@ -11,27 +11,19 @@ public class Explosion : MonoBehaviour {
 	void Update () {
 
 	}
-
+	//Allow barrel movement only when player 2 moves it 
 	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.tag == "Bullet") {
 			Destroy (col.gameObject);
-			Debug.Log ("blow up");
-			Explode ();
 		}
 
 		if (col.gameObject.tag == "Player2") {	
-			Debug.Log ("MOVE");
 			gameObject.GetComponent<Rigidbody2D> ().isKinematic = false;
 		}
 	}
-
+	//Stop allowing movement.
 	void OnCollisionExit2D () {
 		gameObject.GetComponent<Rigidbody2D> ().isKinematic = true;
 	}
-
-	void Explode() {
-		Debug.Log ("BLOW 2");
-	}
-	
 } 
 

@@ -17,8 +17,9 @@ public class player2 : Entity {
 		PlayerMovement ();
 		audio = GetComponent<AudioSource> ();
 	}
-
+	//Controls player movement according to the user input.
 	void PlayerMovement(){
+		//Player walking movement - WASD..
 		if (Input.GetKey(KeyCode.D))
 		{
 			transform.position += new Vector3(walkingSpeed * Time.deltaTime, 0.0f, 0.0f);
@@ -62,12 +63,12 @@ public class player2 : Entity {
 			}
 			healthText.text = "P2 Health: "+ health;
 		}
+		//Open door if player collides with it.
 		if (col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
-			//Debug.Log ("WTF" + keyCount);
 			openDoor (col);
 		}
+		//Player pics up key add a key to each players key counts.
 		if (col.gameObject.tag == "Key") {
-			
 			keyCount++;
 			Debug.Log (keyCount);
 			GameObject.Find ("Player1").GetComponent<Player>().keyCount++;
@@ -81,25 +82,17 @@ public class player2 : Entity {
 		}
 
 	}
-
+	//Checks to see if the player still has health
 	public void checkAlive(){
 		if (health < 0) {
 			Destroy (gameObject);
 			healthText.text = "P2 Health: 0";
-			manageLives();
 			Application.LoadLevel ("Dead");
 		} else {
 			healthText.text = "P2 Health: "+ health;
 		}
 	}
-	void manageLives(){
-		noLives--;
-		if (noLives < 1) {
-			Debug.Log ("GAME OVER");
-		} else {
-		}	
-	}
-
+	//Checks to see if player has enough keys to open the desired door.
 	public void openDoor(Collision2D col){
 		if (col.gameObject.tag == "Door") {
 			if (keyCount > 0) { //Only requires one key to unlock.

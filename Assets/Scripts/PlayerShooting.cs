@@ -32,6 +32,7 @@ public class PlayerShooting : MonoBehaviour {
 				//Depending on which gun is held depends which bullet is fired.
 				if (go.GetComponent<Player> ().gunUpgraded) {
 					Debug.Log ("Upgraded SHot");
+					//Creates the ordinary Upgradedbullet prefab when shot 
 					Rigidbody2D bPrefab = Instantiate (bulletUpgradedPrefab, new Vector3 (transform.position.x, transform.position.y , transform.position.z), Quaternion.identity) as Rigidbody2D;
 					bPrefab.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletUpgradedPrefab.GetComponent<BulletSpecs>().bulletSpeed);
 
@@ -39,6 +40,7 @@ public class PlayerShooting : MonoBehaviour {
 					Destroy (bPrefab.gameObject, bulletUpgradedPrefab.GetComponent<BulletSpecs>().timeAlive);
 				} else {
 					Debug.Log ("Normal SHot");
+					//Creates the ordinary bullet prefab when shot 
 					Rigidbody2D bPrefab = Instantiate (bulletPrefab, new Vector3 (transform.position.x , transform.position.y, transform.position.z), Quaternion.identity) as Rigidbody2D;
 					bPrefab.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletPrefab.GetComponent<BulletSpecs>().bulletSpeed);
 
@@ -46,6 +48,7 @@ public class PlayerShooting : MonoBehaviour {
 					Destroy (bPrefab.gameObject, bulletPrefab.GetComponent<BulletSpecs>().timeAlive);
 				}
 			}
+			//Stops the player from moving due to the shot.
 			go.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 		}
 	}

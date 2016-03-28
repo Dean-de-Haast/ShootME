@@ -27,8 +27,9 @@ public class Player : Entity {
 		playerMovement ();
 	}
 
+	//Controls player movement according to the user input.
 	void playerMovement(){
-		//Player walking movement.
+		//Player walking movement - Arrow keys..
 		if (Input.GetKey (KeyCode.RightArrow)) {
 			transform.position += new Vector3 (walkingSpeed * Time.deltaTime, 0.0f, 0.0f);
 		}
@@ -42,6 +43,7 @@ public class Player : Entity {
 			transform.position -= new Vector3 (0.0f, walkingSpeed * Time.deltaTime, 0.0f);
 		}
 
+		//Player Direction controlled by the mouse.
 
 		//Rotation to the direction of the mouse pointer.
 		var mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
@@ -77,16 +79,17 @@ public class Player : Entity {
 			healthText.text = "P1 Health: "+ health;
 		}
 
+		//Player pics up key add a key to each players key counts.
 		if (col.gameObject.tag == "Key") {
 			keyCount++;
 			GameObject.Find ("Player2").GetComponent<player2>().keyCount++;
 		}
 			
-
+		//Open door if player collides with it.
 		if (col.gameObject.tag == "Door"||col.gameObject.tag == "Door2") {
 			openDoor (col);
 		}
-
+		//Allow for gunUpgrade.
 		if (col.gameObject.tag == "GunUpgrade") {
 			changeGun ();
 		}
@@ -100,6 +103,7 @@ public class Player : Entity {
 		}
 
 	}
+	//Checks to see if the player still has health
 	public void checkAlive(){
 		if (health < 0) {
 			Destroy (gameObject);
@@ -110,6 +114,7 @@ public class Player : Entity {
 		}
 	}
 
+	//Checks to see if player has enough keys to open the desired door.
 	public void openDoor(Collision2D col){
 		if (col.gameObject.tag == "Door") {
 			if (keyCount > 0) { //Only requires one key to unlock.
@@ -122,7 +127,7 @@ public class Player : Entity {
 		}
 	}
 
-
+	//Upgrade the gun to the new gun, change the sprite and change the bool to true
 	void changeGun(){
 		spriteRenderer = GetComponent<SpriteRenderer>(); // we are accessing the SpriteRenderer that is attached to the Gameobject
 		spriteRenderer.sprite = newGun;
@@ -131,7 +136,6 @@ public class Player : Entity {
 	}
 
 	void ExitLevel(){
-		Debug.Log ("Next Level");
 		Application.LoadLevel ("Level2");
 	}
 	void Win(){
