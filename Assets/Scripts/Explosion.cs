@@ -31,9 +31,6 @@ public class Explosion : MonoBehaviour {
 
 	void Explode() {
 		Debug.Log ("BLOW 2");
-//		var exp = GetComponent<ParticleSystem>();
-//		exp.Play();
-//		Destroy(gameObject,exp.duration);
 	}
 	
 } 

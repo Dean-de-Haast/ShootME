@@ -8,8 +8,9 @@ public class EnemyAI : MonoBehaviour {
 
 	public GameObject FirePoint;
 
+	//All of the transforms for use within the linecast.
 	public Transform sightStart;
-	public Transform sightEnd;
+	public Transform sightEnd, sightEndObject;
 	public Transform sightEndFarLeft,sightEndFarLeft2,sightEndFarMiddle,sightEndFarRight,sightEndFarRight2,sightEndFarFarLeft,sightEndFarFarRight;
 
 	public bool spottedFarP1 = false;
@@ -17,6 +18,12 @@ public class EnemyAI : MonoBehaviour {
 	public bool spottedP1 = false;
 	public bool spottedP2 = false;
 	public bool spottedObject = false;
+
+	public bool gotShot = false;
+	public bool gotHit = false;
+
+	public int count = 0;
+	public int count2 = 0;
 
 	public GameObject alert;
 	// Use this for initialization
@@ -35,6 +42,7 @@ public class EnemyAI : MonoBehaviour {
 	void Raycasting(){
 		spottedFarP1 = false;
 		spottedFarP2 = false;
+		//For testing. draw the lines.
 		Debug.DrawLine (sightStart.position,sightEnd.position, Color.green);
 		Debug.DrawLine (sightStart.position,sightEndFarFarLeft.position, Color.red);
 		Debug.DrawLine (sightStart.position,sightEndFarLeft.position, Color.red);
@@ -45,7 +53,9 @@ public class EnemyAI : MonoBehaviour {
 		Debug.DrawLine (sightStart.position,sightEndFarRight2.position, Color.yellow);
 
 		//Check if touching collider.
-		spottedObject = Physics2D.Linecast (sightStart.position, sightEnd.position, 1<<LayerMask.NameToLayer("Objects"));
+
+		//First checks whether the short linecast hits an object because then there is an object before the player.
+		spottedObject = Physics2D.Linecast (sightStart.position, sightEndObject.position, 1<<LayerMask.NameToLayer("Objects"));
 
 		//Player 1
 		if (!spottedObject) {
@@ -73,8 +83,9 @@ public class EnemyAI : MonoBehaviour {
 			}
 		}
 
+		//Player 2
 		if (!spottedObject) {
-			spottedP2 = Physics2D.Linecast (sightStart.position, sightEnd.position, 1 << LayerMask.NameToLayer ("Player2"));
+			spottedP2 = Physics2D.Linecast (sightStart.position, sightEndObject.position, 1 << LayerMask.NameToLayer ("Player2"));
 			if (!spottedFarP2) {
 				spottedFarP2 = Physics2D.Linecast (sightStart.position, sightEndFarFarLeft.position, 1 << LayerMask.NameToLayer ("Player2"));
 			} 
@@ -102,9 +113,10 @@ public class EnemyAI : MonoBehaviour {
 
 	}
 
+	//The different states that a player can be in.
 	void Behaviours(){
 		//If close enough start shooting.
-		if (spottedP1||spottedP2) {
+		if (spottedP1 || spottedP2) {
 			Debug.Log ("SHOOT");
 			alert.SetActive (true);
 			StartShooting ();
@@ -114,7 +126,23 @@ public class EnemyAI : MonoBehaviour {
 			ChasePlayer1 ();
 		} else if (spottedFarP2) {
 			ChasePlayer2 ();
-		} else {
+		} else if (gotShot) {
+			count++;
+			alert.SetActive (true);
+			ChasePlayer1 ();
+			//Gives enough time for the enemy to spin around and get in spotted.
+			if (count > 100) {
+				gotShot = false;
+			}
+		} else if (gotHit) {
+			count++;
+			alert.SetActive (true);
+			ChasePlayer2 ();
+			//Gives enough time for the enemy to spin around and get in spotted.
+			if (count2 > 100) {
+				gotHit = false;
+			}
+		}else{
 			alert.SetActive (false);
 			Patrol ();
 		}
@@ -124,8 +152,9 @@ public class EnemyAI : MonoBehaviour {
 			StopShooting ();
 		}	
 	}
-
-	void ChasePlayer1(){
+		
+	//Script to chase a player, if spotted reorintates to face the player. and moves towards the player.
+	public void ChasePlayer1(){
 		GameObject go;
 		if (player1 == null) {
 			go = GameObject.Find ("Player1");
@@ -137,6 +166,8 @@ public class EnemyAI : MonoBehaviour {
 
 		if (player1 == null)
 			return; // Try again next frame if it doesn't exist.
+		
+		Debug.Log("2");
 		Vector3 dir = player1.position - transform.position;
 		dir.Normalize ();
 
@@ -149,6 +180,7 @@ public class EnemyAI : MonoBehaviour {
 		MoveForward ();
 	}
 
+	//MOves the object forward.
 	void MoveForward(){
 		Vector3 pos = transform.position;
 		Vector3 velocity = new Vector3 (0, WalkingSpeed * Time.deltaTime, 0);
@@ -156,8 +188,10 @@ public class EnemyAI : MonoBehaviour {
 		transform.position = pos;
 	}
 
-	void ChasePlayer2(){
+	//Script to chase a player, if spotted reorintates to face the player. and moves towards the player.
+	public void ChasePlayer2(){
 		GameObject go;
+		//Checks whether the player is already held if not assigns it.
 		if (player1 == null) {
 			go = GameObject.Find ("Player2");
 
@@ -165,7 +199,7 @@ public class EnemyAI : MonoBehaviour {
 				player1 = go.transform;
 			}
 		}
-
+		//If it does not exist.
 		if (player1 == null)
 			return; // Try again next frame if it doesn't exist.
 		Vector3 dir = player1.position - transform.position;
@@ -180,6 +214,7 @@ public class EnemyAI : MonoBehaviour {
 		MoveForward ();
 	}
 
+	//Walk randomly if not in alerted state.
 	void Patrol(){
 		Vector2 randomDirection = new Vector3(Random.Range(-30, 30), Random.Range(-30, 30));
 		randomDirection.Normalize ();
@@ -200,5 +235,4 @@ public class EnemyAI : MonoBehaviour {
 	void StopShooting(){
 		FirePoint.GetComponent<EnemyShooting>().enabled = false;
 	}
-		
 }

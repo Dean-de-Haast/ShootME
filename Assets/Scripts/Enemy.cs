@@ -31,61 +31,46 @@ public class Enemy : Entity {
 		if (col.gameObject.tag == "Bullet") {
 			Destroy (col.gameObject);
 			health -= col.gameObject.GetComponent<BulletSpecs>().damage;
-			Debug.Log (health);
 			audioShot.Play ();
 			checkAlive ();
+			gameObject.GetComponent<EnemyAI> ().gotShot = true;
+			gameObject.GetComponent<EnemyAI> ().count = 0;
 		}
 
-		//Picks up health
-		if (col.gameObject.tag == "HealthPack") {
-
-			for (int i = 0; i < 20; i++) {
-				if (health < 100) {
-					health += 1;
-				}
-			}
-		}
-
+		//Hit by PLayer2
 		if (col.gameObject.tag == "Player2") {
-			Debug.Log ("PLayer slaaan");
 			health -= col.gameObject.GetComponent<player2>().damage;
 			checkAlive();
+			gameObject.GetComponent<EnemyAI> ().gotHit = true;
+			gameObject.GetComponent<EnemyAI> ().count2 = 0;
+
 		}
 
+		//Reverse Direction if a player hits an object
 		if (col.gameObject.tag == "Barrel"||col.gameObject.tag == "Wall"||col.gameObject.tag == "Door"||col.gameObject.tag == "Door2"||col.gameObject.tag == "ExitDoor"||col.gameObject.tag == "ExplosiveBarrel") {
 			changeDirection ();
 		}
 
 	}
 
+	//Checks to see if player still has health.
 	void checkAlive(){
 		if (health <= 0) {
-			
-			//Destroy (gameObject);
-			//healthText.text = "P2 Health: 0";
 			Death();
-		} else {
-			//healthText.text = "P2 Health: "+ health;
 		}
 	}
 
+	//When life<0 destroy object but first change sprite.
 	void Death(){
-		
 		alert.SetActive (false);
-		//transform.position = transform.position;
 		spriteRenderer = GetComponent<SpriteRenderer>(); // we are accessing the SpriteRenderer that is attached to the Gameobject
-
-		//waiter ();
 		Instantiate(bloodPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
 		spriteRenderer.sprite = sprite1;
+		//wait 0.4seconds before destroying.
 		Destroy (gameObject,0.4f);
 	}
 
 	void changeDirection(){
-		//Quaternion desiredRot = Quaternion.Euler (0, 0, 45);
-
-		//Slowing down the speed of rotation.
-		//transform.rotation = Quaternion.RotateTowards(transform.rotation,desiredRot,rotSpeed*Time.deltaTime);
 		transform.Rotate(0,0,45);
 	}
 

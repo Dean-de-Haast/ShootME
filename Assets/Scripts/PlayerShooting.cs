@@ -46,6 +46,7 @@ public class PlayerShooting : MonoBehaviour {
 					Destroy (bPrefab.gameObject, bulletPrefab.GetComponent<BulletSpecs>().timeAlive);
 				}
 			}
+			go.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 		}
 	}
 
