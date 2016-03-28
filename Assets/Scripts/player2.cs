@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class player2 : Entity {
 	public float walkingSpeed;
@@ -87,7 +88,7 @@ public class player2 : Entity {
 		if (health < 0) {
 			Destroy (gameObject);
 			healthText.text = "P2 Health: 0";
-			Application.LoadLevel ("Dead");
+			SceneManager.LoadScene("Dead");
 		} else {
 			healthText.text = "P2 Health: "+ health;
 		}
@@ -107,11 +108,11 @@ public class player2 : Entity {
 
 	void ExitLevel(){
 		Debug.Log ("Next Level");
-		Application.LoadLevel ("Level2");
+		SceneManager.LoadScene("Level2");
 	}
 
 	void Win(){
-		Application.LoadLevel ("Win");
+		SceneManager.LoadScene("Win");
 	}
 
 }

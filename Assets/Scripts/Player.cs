@@ -108,7 +108,7 @@ public class Player : Entity {
 		if (health < 0) {
 			Destroy (gameObject);
 			healthText.text = "P1 Health: 0";
-			Application.LoadLevel ("Dead");
+			SceneManager.LoadScene("Dead");
 		} else {
 			healthText.text = "P1 Health: "+ health;
 		}
@@ -136,10 +136,10 @@ public class Player : Entity {
 	}
 
 	void ExitLevel(){
-		Application.LoadLevel ("Level2");
+		SceneManager.LoadScene("Level2");
 	}
 	void Win(){
-		Application.LoadLevel ("Win");
+		SceneManager.LoadScene("Win");
 	}
 
 
